@@ -1,4 +1,4 @@
-package com.helpdesk.domain.enums;
+package enums;
 
 public enum Status {
 	ADMIN(0 ,"ABERTO"), CLIENTE(1 , "ANDAMENTO") ,TECNICO(2, "ENCERRADO" );

@@ -1,9 +1,10 @@
-package domain;
+package com.helpdesk.domain;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import enums.Perfil;
+import com.helpdesk.enums.Perfil;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
 

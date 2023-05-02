@@ -1,12 +1,12 @@
-package enums;
+package com.helpdesk.enums;
 
-public enum Status {
-	ADMIN(0 ,"ABERTO"), CLIENTE(1 , "ANDAMENTO") ,TECNICO(2, "ENCERRADO" );
+public enum Perfil {
+	ADMIN(0 ,"ROLE_ADMIN"), CLIENTE(1 , "ROLE_CLINETE") ,TECNICO(2, "ROLE_TECNICO" );
 	
 	private Integer codigo;
 	private String descricao;
 	
-	private Status(Integer codigo, String descricao) {
+	private Perfil(Integer codigo, String descricao) {
 		this.codigo = codigo;
 		this.descricao = descricao;
 	}
@@ -19,16 +19,16 @@ public enum Status {
 		return descricao;
 	}
 	
-    public static Status toEnum(Integer cod) {
+    public static Perfil toEnum(Integer cod) {
     	if(cod == null) {
     		return null;
     	}
-    	for(Status x : Status.values()) {
+    	for(Perfil x : Perfil.values()) {
     		if(cod.equals(x.getCodigo())) {
     			return x;
     		}
     	}
-    	throw new IllegalArgumentException("Status inválido");
+    	throw new IllegalArgumentException("Perfil inválido");
     }
 	
 	

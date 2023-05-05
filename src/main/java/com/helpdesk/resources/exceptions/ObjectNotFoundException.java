@@ -1,4 +1,4 @@
-package com.helpdesk.services;
+package com.helpdesk.resources.exceptions;
 
 public class ObjectNotFoundException extends RuntimeException {
 

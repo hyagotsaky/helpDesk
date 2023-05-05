@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -40,6 +42,25 @@ public class ResourceExceptionHandler {
 				ex.getMessage(), request.getRequestURI());
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+	}
+	
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<StandarError> validationsErrors(MethodArgumentNotValidException ex,
+			HttpServletRequest request) {
+
+		LocalDateTime localDateTime = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		String dataFormatada = localDateTime.format(formatter);
+
+		ValidationError errors = new ValidationError(dataFormatada,HttpStatus.BAD_REQUEST.value(),
+				"Validation error","Erro na validacao dos campos",request.getRequestURI());
+		
+		for(FieldError x : ex.getBindingResult().getFieldErrors()) {
+			errors.addErros(x.getField(), x.getDefaultMessage());
+		}
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
 	}
 
 }

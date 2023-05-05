@@ -1,7 +1,7 @@
 package com.helpdesk.resources;
 
 import java.net.URI;
-import java.util.List;import java.util.stream.Collector;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +17,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.helpdesk.domain.Tecnico;
 import com.helpdesk.domain.dtos.TecnicoDto;
 import com.helpdesk.services.TecnicoService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/tecnicos")
@@ -42,7 +44,7 @@ public class TecnicoResource {
 	
 	
 	@PostMapping
-	public ResponseEntity<TecnicoDto> create(@RequestBody TecnicoDto objDTO ) {
+	public ResponseEntity<TecnicoDto> create(@Valid @RequestBody TecnicoDto objDTO ) {
 		Tecnico newObj = service.create(objDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();

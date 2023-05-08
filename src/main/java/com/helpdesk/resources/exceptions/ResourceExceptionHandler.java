@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ConstraintViolationException;
+
 
 @ControllerAdvice
 public class ResourceExceptionHandler {
@@ -61,6 +63,25 @@ public class ResourceExceptionHandler {
 		}
 
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+	}
+	
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<StandarError> constraintViolationException(ConstraintViolationException ex,
+			HttpServletRequest request) {
+
+		LocalDateTime localDateTime = LocalDateTime.now();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+		String dataFormatada = localDateTime.format(formatter);
+		
+		String mensagemErro = ex.getConstraintViolations().stream().findFirst().get().getMessage();
+
+
+
+		StandarError error = new StandarError(dataFormatada, HttpStatus.BAD_REQUEST.value(), "Violação de dados2",
+				mensagemErro, request.getRequestURI());
+
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
 	}
 
 }

@@ -3,18 +3,19 @@ package com.helpdesk.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.helpdesk.domain.Cliente;
 import com.helpdesk.domain.Pessoa;
 import com.helpdesk.domain.dtos.ClienteDto;
-import com.helpdesk.domain.Cliente;
-import com.helpdesk.repositories.PessoaRepository;
 import com.helpdesk.repositories.ClienteRepository;
+import com.helpdesk.repositories.PessoaRepository;
 import com.helpdesk.resources.exceptions.DataIntegrityViolationException;
 import com.helpdesk.resources.exceptions.ObjectNotFoundException;
-
-import jakarta.validation.Valid;
 
 @Service
 public class ClienteService {
@@ -24,6 +25,9 @@ public class ClienteService {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
 	public Cliente findById(Integer id) {
 		Optional<Cliente> obj = repository.findById(id);
@@ -37,6 +41,7 @@ public class ClienteService {
 
 	public Cliente create(ClienteDto objDto) {
 		objDto.setId(null);
+		objDto.setSenha(encoder.encode(objDto.getSenha()));
 		validaPorCpfEmail(objDto);
 		Cliente newObj = new Cliente(objDto);
 		return repository.save(newObj);

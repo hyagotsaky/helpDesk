@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +17,6 @@ import com.helpdesk.enums.Prioridade;
 import com.helpdesk.enums.Status;
 import com.helpdesk.repositories.ChamadoRepository;
 import com.helpdesk.resources.exceptions.ObjectNotFoundException;
-
-import jakarta.validation.Valid;
 
 @Service
 public class ChamadoService {

@@ -3,7 +3,10 @@ package com.helpdesk.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.helpdesk.domain.Pessoa;
@@ -14,8 +17,6 @@ import com.helpdesk.repositories.TecnicoRepository;
 import com.helpdesk.resources.exceptions.DataIntegrityViolationException;
 import com.helpdesk.resources.exceptions.ObjectNotFoundException;
 
-import jakarta.validation.Valid;
-
 @Service
 public class TecnicoService {
 
@@ -24,6 +25,9 @@ public class TecnicoService {
 
 	@Autowired
 	private PessoaRepository pessoaRepository;
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
 	public Tecnico findById(Integer id) {
 		Optional<Tecnico> obj = repository.findById(id);
@@ -37,6 +41,7 @@ public class TecnicoService {
 
 	public Tecnico create(TecnicoDto objDto) {
 		objDto.setId(null);
+		objDto.setSenha(encoder.encode(objDto.getSenha()));
 		validaPorCpfEmail(objDto);
 		Tecnico newObj = new Tecnico(objDto);
 		return repository.save(newObj);

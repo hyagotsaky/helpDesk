@@ -4,14 +4,13 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.helpdesk.domain.Tecnico;
 import com.helpdesk.enums.Perfil;
-
-import jakarta.validation.constraints.NotNull;
 
 public class TecnicoDto implements Serializable {
 	private static final long serialVersionUID = 1L;

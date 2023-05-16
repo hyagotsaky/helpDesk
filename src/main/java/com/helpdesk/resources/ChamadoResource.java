@@ -1,9 +1,10 @@
 package com.helpdesk.resources;
 
 import java.net.URI;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.helpdesk.domain.Chamado;
 import com.helpdesk.domain.dtos.ChamadosDto;
 import com.helpdesk.services.ChamadoService;
-
-import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/chamados")
